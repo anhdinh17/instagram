@@ -25,7 +25,7 @@ class HomeViewController: UIViewController {
         // Check auth status
         // if the user is not signed in
         if Auth.auth().currentUser == nil {
-            // show log in
+            // show loginViewController, set up the screen by codes.
             let loginVC = LoginViewController()
             loginVC.modalPresentationStyle = .fullScreen
             present(loginVC, animated: false)
