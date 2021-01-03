@@ -5,6 +5,7 @@
 //  Created by Anh Dinh on 12/7/20.
 //
 
+import SafariServices
 import UIKit
 
 class LoginViewController: UIViewController {
@@ -131,18 +132,18 @@ class LoginViewController: UIViewController {
         
         passwordField.frame = CGRect(x: 25,
                                      y: usernameEmailField.bottom + 10,
-                                  width:view.width - 50,
-                                  height: 52.0)
+                                     width:view.width - 50,
+                                     height: 52.0)
         
         loginButton.frame = CGRect(x: 25,
                                    y: passwordField.bottom + 10,
-                                  width:view.width - 50,
-                                  height: 52.0)
+                                   width:view.width - 50,
+                                   height: 52.0)
         
         createAccountButton.frame = CGRect(x: 25,
-                                   y: loginButton.bottom + 10,
-                                  width:view.width - 50,
-                                  height: 52.0)
+                                           y: loginButton.bottom + 10,
+                                           width:view.width - 50,
+                                           height: 52.0)
         
         termsButton.frame = CGRect(x: 10,
                                    y: view.height - view.safeAreaInsets.bottom - 100,
@@ -150,9 +151,9 @@ class LoginViewController: UIViewController {
                                    height: 50)
         
         privacyButton.frame = CGRect(x: 10,
-                                   y: view.height - view.safeAreaInsets.bottom - 50,
-                                   width: view.width - 20,
-                                   height: 50)
+                                     y: view.height - view.safeAreaInsets.bottom - 50,
+                                     width: view.width - 20,
+                                     height: 50)
         
         configureHeaderView()
         
@@ -195,15 +196,43 @@ class LoginViewController: UIViewController {
         
     }
     
+    //MARK: - Button pressed
     @objc private func didTapLoginButton(){
+        
+        // turn off keyboard
+        passwordField.resignFirstResponder()
+        usernameEmailField.resignFirstResponder()
+        
+        // Set conditions for user names and passwords
+        guard let usernameEmail = usernameEmailField.text, !usernameEmail.isEmpty,
+              // password is not empty and it has more than 8 characters
+              let password = passwordField.text, !password.isEmpty, password.count >= 8 else {
+                return
+        }
+        
         print("Login button has been pressed")
     }
     
-    @objc private func didTapTermsButton(){}
+    @objc private func didTapTermsButton(){
+        guard let url = URL(string: "https://www.instagram.com/about/legal/terms/before-january-19-2013/#:~:text=Basic%20Terms&text=You%20may%20not%20post%20nude,or%20intimidate%20other%20Instagram%20users.") else {
+            return
+        }
+        let vc = SFSafariViewController(url: url)
+        present(vc,animated: true)
+    }
     
-    @objc private func didTapPrivacynButton(){}
+    @objc private func didTapPrivacynButton(){
+        guard let url = URL(string: "https://help.instagram.com/519522125107875") else {
+            return
+        }
+        let vc = SFSafariViewController(url: url)
+        present(vc,animated: true)
+    }
     
-    @objc private func didTapCreateAccountButton(){}
+    @objc private func didTapCreateAccountButton(){
+        let vc = RegistrationViewController()
+        present(vc,animated: true)
+    }
     
     
 }
